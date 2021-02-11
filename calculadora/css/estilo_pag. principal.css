@@ -1,0 +1,51 @@
+
+#titulo {
+	height: 10%;
+	margin-bottom: 15%;
+	margin-top: 10px;
+	text-align: center;
+}
+
+#resultados {
+	width: 80%;
+	height: 6%;
+	margin-left: 9%;
+	padding: 0px;
+	font-size: 20px;
+}
+
+#botoes button {
+	height: 100%;
+	width: 100%;
+	margin: 0 auto;
+	font-size: 20px;
+}
+
+#botoes {
+	width: 85%;
+	height: 300px;
+	background-color: red;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
+	margin-top: 10px;
+
+} 
+
+#botoes table{
+	width: 90%;
+	height: 90%;
+	margin: 0 auto;
+
+} 
+
+#fundo {
+	background-color: green;
+	width: 50%;
+	height: 520px;
+	padding: 0px;
+	margin:0 auto;
+	margin-top: 3%;
+}
