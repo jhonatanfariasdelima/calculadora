@@ -5,8 +5,44 @@ $(document).ready(function(){
 	escreve_num();
 	escreve_sinal();
 	calculo();
+	
 });
 
+
+document.addEventListener("keypress", function(e) {
+	if(!bloq_alfabeto(e)){
+		e.preventDefault();
+
+	}else if(e.keyCode == 44){
+		if(document.getElementById('resultados').value ==  ''){
+
+			document.getElementById('resultados').value = document.getElementById('resultados').value + '0';
+
+		}else if(document.getElementById('resultados').value.indexOf(',') > 0){
+
+			e.preventDefault();
+		}
+	}
+
+});
+
+function bloq_alfabeto(e){
+
+	const char = String.fromCharCode(e.keyCode);
+
+	console.log(char);
+	console.log(e.keyCode);
+
+	const padrao = '[0-9]';
+
+	if(e.keyCode == 44){
+		return true;
+
+	}else if(char.match(padrao)){
+		return true;
+	}
+
+}
 
 function escreve_num() {
 	$("#00").click(function(){
@@ -55,7 +91,14 @@ function escreve_num() {
 
 	$("#clear").click(function(){
 		document.getElementById('resultados').value = '';
-	})}
+		document.getElementById('dividir').style.backgroundColor = "";
+		document.getElementById('adicao').style.backgroundColor = "";
+		document.getElementById('multiplicar').style.backgroundColor = "";
+		document.getElementById('subtrair').style.backgroundColor = "";
+
+	})
+
+	}
 
 
 function escreve_sinal() {
@@ -174,6 +217,5 @@ function calculo() {
 		console.log(total);
 	})
 }
-
 
 
