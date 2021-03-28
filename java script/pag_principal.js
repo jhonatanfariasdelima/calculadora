@@ -1,11 +1,32 @@
 var total = [0, 0, 0];
-operacao = '';
+var operacao = '';
+
 $(document).ready(function () {
 
 	operacao_click();
 	escreve_num_click();
+	mostrador_calculo();
+	
 
 });
+
+
+function mostrador_calculo(){
+	if (total[0] != 0) {
+		document.getElementById('mostrador_calculo').value = total[0];
+		if (operacao != '') {
+			document.getElementById('mostrador_calculo').value = total[0], operacao;
+			if(total[1] != 0){
+				document.getElementById('mostrador_calculo').value = total[0], operacao, total[1];
+			}else{
+				alert("a");
+			}
+		}else{
+			alert("a");
+		}
+	}
+	
+};
 
 
 document.addEventListener("keypress", function (e) {
@@ -25,6 +46,24 @@ document.addEventListener("keypress", function (e) {
 
 });
 
+
+function verifica_operaca_em_andamento(){
+	/*função que verifica o andamento de operações*/
+	if(operacao == ''){
+		return true;
+	}else{
+		document.getElementById('resultados').value = '';
+		total = [0, 0, 0];
+		operacao = "";
+		document.getElementById('dividir').style.backgroundColor = "";
+		document.getElementById('adicao').style.backgroundColor = "";
+		document.getElementById('multiplicar').style.backgroundColor = "";
+		document.getElementById('subtrair').style.backgroundColor = "";
+		alert("por favor realize uma operação por vez");
+		return false;
+	}
+};
+
 function dig_teclado(e) {
 	/*
 	função que bloqueia a digitação do alfabeto pelo teclado, 
@@ -32,7 +71,7 @@ function dig_teclado(e) {
 	aritiméticas suportadas pela calculadora (/ + * -) para digitação 
 	do usuário com o teclado
 	*/
-
+	mostrador_calculo(total[0], operacao, total[1]);
 	const char = String.fromCharCode(e.keyCode);
 	const padrao = '[0-9]'; /*permite o uso do teclado alfanumérico (de 0 a 9)*/
 
@@ -44,69 +83,76 @@ function dig_teclado(e) {
 		return true;
 
 	}else if(e.keyCode == 45){ /*subtração*/
-	
-		if (document.getElementById('resultados').value == '') {
+		if(verifica_operaca_em_andamento()){
 
-			document.getElementById('resultados').value = document.getElementById('resultados').value;
+			if (document.getElementById('resultados').value == '') {
 
-		} else {
-			total[0] = document.getElementById('resultados').value /*adiciona o primeiro numero a lista na possição 0*/
+				document.getElementById('resultados').value = document.getElementById('resultados').value;
 
-			document.getElementById('subtrair').style.backgroundColor = "cyan"; /*muda a cor do botão para 
-																	identificar a operação atual para o usuario*/
+			} else {
+				total[0] = document.getElementById('resultados').value /*adiciona o primeiro numero a lista na possição 0*/
 
-			document.getElementById('resultados').value = '';
+				document.getElementById('subtrair').style.backgroundColor = "cyan"; /*muda a cor do botão para 
+																		identificar a operação atual para o usuario*/
 
-			operacao = 's';  /*operação de subtracao*/
-			
-		}
+				document.getElementById('resultados').value = '';
+
+				operacao = '-';  /*operação de subtracao*/
+				mostrador_calculo();
+				console.log(total[0], operacao, total[1]);
+				
+			}
+		};
 	}else if(e.keyCode == 43){ /*soma*/
-	
-		if (document.getElementById('resultados').value == '') {
-
-			document.getElementById('resultados').value = document.getElementById('resultados').value;
-
-		} else {
-			total[0] = document.getElementById('resultados').value 
-
-			document.getElementById('adicao').style.backgroundColor = "cyan"; 
-
-			document.getElementById('resultados').value = '';
-
-			operacao = 'a';  /*operação de soma*/
+		if(verifica_operaca_em_andamento()){
 			
-		}
+			if (document.getElementById('resultados').value == '') {
+
+				document.getElementById('resultados').value = document.getElementById('resultados').value;
+
+			} else {
+				total[0] = document.getElementById('resultados').value 
+
+				document.getElementById('adicao').style.backgroundColor = "cyan"; 
+
+				document.getElementById('resultados').value = '';
+
+				operacao = '+';  /*operação de soma*/
+				
+			}
+		};
 	}else if(e.keyCode == 47){ /*divisão*/
-	
-		if (document.getElementById('resultados').value == '') {
+		if(verifica_operaca_em_andamento()){
+			if (document.getElementById('resultados').value == '') {
 
-			document.getElementById('resultados').value = document.getElementById('resultados').value;
+				document.getElementById('resultados').value = document.getElementById('resultados').value;
 
-		} else {
-			total[0] = document.getElementById('resultados').value 
+			} else {
+				total[0] = document.getElementById('resultados').value 
 
-			document.getElementById('dividir').style.backgroundColor = "cyan"; 
+				document.getElementById('dividir').style.backgroundColor = "cyan"; 
 
-			document.getElementById('resultados').value = '';
+				document.getElementById('resultados').value = '';
 
-			operacao = 'd';  
-			
+				operacao = '÷';  
+			}
 		}
 	}else if(e.keyCode == 42){  /*multiplicação*/ 
-	
-		if (document.getElementById('resultados').value == '') {
+		if(verifica_operaca_em_andamento_em_andamento()){
+			if (document.getElementById('resultados').value == '') {
 
-			document.getElementById('resultados').value = document.getElementById('resultados').value;
+				document.getElementById('resultados').value = document.getElementById('resultados').value;
 
-		} else {
-			total[0] = document.getElementById('resultados').value 
+			} else {
+				total[0] = document.getElementById('resultados').value 
 
-			document.getElementById('multiplicar').style.backgroundColor = "cyan"; 
+				document.getElementById('multiplicar').style.backgroundColor = "cyan"; 
 
-			document.getElementById('resultados').value = '';
+				document.getElementById('resultados').value = '';
 
-			operacao = 'm';  
-			
+				operacao = 'x';  
+				
+			}
 		}
 	}else if(e.keyCode == 13){  /*enter*/
 		calculo();
@@ -114,77 +160,82 @@ function dig_teclado(e) {
 	}
 };
 
-function verif_operacao(){
-	/*função que verifica o andamento de operações*/
-}
 
 function operacao_click() {
-
+	
 	$("#subtrair").click(function () {
-		if (document.getElementById('resultados').value == '') {
+		if(verifica_operaca_em_andamento()){
+			if (document.getElementById('resultados').value == '') {
 
-			document.getElementById('resultados').value = document.getElementById('resultados').value;
+				document.getElementById('resultados').value = document.getElementById('resultados').value;
 
-		}else {
-			total[0] = document.getElementById('resultados').value /*adiciona o primeiro numero a lista*/
+			}else {
+				total[0] = document.getElementById('resultados').value /*adiciona o primeiro numero a lista*/
 
-			document.getElementById('subtrair').style.backgroundColor = "cyan"; /*muda a cor do botão para 
-																	identificar a operação atual para o usuario*/
+				document.getElementById('subtrair').style.backgroundColor = "cyan"; /*muda a cor do botão para 
+																		identificar a operação atual para o usuario*/
 
-			document.getElementById('resultados').value = '';
+				document.getElementById('resultados').value = '';
 
-			operacao = 's';  /*operação de subtracao*/
+				operacao = '-';  /*operação de subtracao*/
+			}
 		}
 	});
 
 	$("#adicao").click(function () {
-		if (document.getElementById('resultados').value == '') {
+		if(verifica_operaca_em_andamento()){
+			if (document.getElementById('resultados').value == '') {
 
-			document.getElementById('resultados').value = document.getElementById('resultados').value;
+				document.getElementById('resultados').value = document.getElementById('resultados').value;
 
-		} else {
-			total[0] = document.getElementById('resultados').value /*adiciona o primeiro numero a lista*/
+			} else {
+				total[0] = document.getElementById('resultados').value /*adiciona o primeiro numero a lista*/
 
-			document.getElementById('adicao').style.backgroundColor = "cyan"; /*muda a cor do botão para 
-																	identificar a operação atual para o usuario*/
+				document.getElementById('adicao').style.backgroundColor = "cyan"; /*muda a cor do botão para 
+																		identificar a operação atual para o usuario*/
 
-			document.getElementById('resultados').value = '';
+				document.getElementById('resultados').value = '';
 
-			operacao = 'a';  /*operação de adição*/
+				operacao = '+';  /*operação de adição*/
+			}
 		}
 	});
 
 	$("#multiplicar").click(function () {
-		if (document.getElementById('resultados').value == '') {
+		if(verifica_operaca_em_andamento()){
+			if (document.getElementById('resultados').value == '') {
 
-			document.getElementById('resultados').value = document.getElementById('resultados').value;
+				document.getElementById('resultados').value = document.getElementById('resultados').value;
 
-		} else {
-			total[0] = document.getElementById('resultados').value /*adiciona o primeiro numero a lista*/
+			} else {
+				total[0] = document.getElementById('resultados').value /*adiciona o primeiro numero a lista*/
 
-			document.getElementById('multiplicar').style.backgroundColor = "cyan"; /*muda a cor do botão para 
-																	identificar a operação atual para o usuario*/
+				document.getElementById('multiplicar').style.backgroundColor = "cyan"; /*muda a cor do botão para 
+																		identificar a operação atual para o usuario*/
 
-			document.getElementById('resultados').value = '';
+				document.getElementById('resultados').value = '';
 
-			operacao = 'm';  /*operação de multiplicação*/
+				operacao = 'x';  /*operação de multiplicação*/
+			}
 		}
 	});
 
 	$("#dividir").click(function () {
-		if (document.getElementById('resultados').value == '') {
+		if(verifica_operaca_em_andamento_em_andamento()){
+			if (document.getElementById('resultados').value == '') {
 
-			document.getElementById('resultados').value = document.getElementById('resultados').value;
+				document.getElementById('resultados').value = document.getElementById('resultados').value;
 
-		} else {
-			total[0] = document.getElementById('resultados').value /*adiciona o primeiro numero a lista*/
+			} else {
+				total[0] = document.getElementById('resultados').value /*adiciona o primeiro numero a lista*/
 
-			document.getElementById('dividir').style.backgroundColor = "cyan"; /*muda a cor do botão para 
-																	identificar a operação atual para o usuario*/
+				document.getElementById('dividir').style.backgroundColor = "cyan"; /*muda a cor do botão para 
+																		identificar a operação atual para o usuario*/
 
-			document.getElementById('resultados').value = '';
+				document.getElementById('resultados').value = '';
 
-			operacao = 'd';  /*operação de divisão*/
+				operacao = '÷';  /*operação de divisão*/
+			}
 		}
 	});
 
@@ -268,28 +319,30 @@ function calculo() {
 	
 	total[1] = document.getElementById('resultados').value /*adiciona o segundo numero a lista na posição 1*/
 
-	if (operacao == 'd') { /*operação de divisão*/
+	if (operacao == '÷') { /*operação de divisão*/
 		total[2] = total[0] / total[1];
 		document.getElementById('resultados').value = total[2]; /*adiciona a resultado da equação a posição 2 da lista*/
 		document.getElementById('dividir').style.backgroundColor = "";
 		operacao = '';
 
-	} else if (operacao == 'a') {  /*operação de adição*/
+	} else if (operacao == '+') {  /*operação de adição*/
 		total[2] = parseInt(total[0]) + parseInt(total[1]);
 		document.getElementById('resultados').value = total[2];
 		document.getElementById('adicao').style.backgroundColor = "";
 		operacao = '';
 
-	} else if (operacao == 's') {  /*operação de subtração*/
+	} else if (operacao == '-') {  /*operação de subtração*/
 		total[2] = parseInt(total[0]) - parseInt(total[1]);
 		document.getElementById('resultados').value = total[2];
 		document.getElementById('subtrair').style.backgroundColor = "";
 		operacao = '';
 
-	} else if (operacao == 'm') {  /*operação de multiplicação*/
+	} else if (operacao == 'x') {  /*operação de multiplicação*/
 		total[2] = parseInt(total[0]) * parseInt(total[1]);
 		document.getElementById('resultados').value = total[2];
 		document.getElementById('multiplicar').style.backgroundColor = "";
 		operacao = '';
+	}else{
+		document.getElementById('resultados').value = "";
 	}
 };
