@@ -1,5 +1,3 @@
-import { mostrador_calculo } from "/java script/pag_principal.js";
-
 // Função para testar igualdade entre valores e exibir mensagens de erro
 function test(descricao, valorEsperado, valorObtido) {
   if (valorEsperado === valorObtido) {
