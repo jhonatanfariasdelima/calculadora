@@ -1,3 +1,6 @@
+//TESTES
+
+
 // Função para testar igualdade entre valores e exibir mensagens de erro
 function test(descricao, valorEsperado, valorObtido) {
   if (valorEsperado === valorObtido) {
@@ -12,6 +15,24 @@ function test(descricao, valorEsperado, valorObtido) {
 // Inicialize variáveis globais para teste
 var total = [0, 0, 0];
 var operacao = '';
+
+
+function mostrador_calculo(){
+	if (total[0] != 0) {
+		document.getElementById('mostrador_calculo').value = total[0];
+		if (operacao != '') {
+			document.getElementById('mostrador_calculo').value = total[0], operacao;
+			if(total[1] != 0){
+				document.getElementById('mostrador_calculo').value = total[0], operacao, total[1];
+			}else{
+				alert("a");
+			}
+		}else{
+			alert("a");
+		}
+	}
+	
+};
 
 // Função de teste para a função mostrador_calculo
 function testMostradorCalculo() {
