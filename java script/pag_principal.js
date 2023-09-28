@@ -27,7 +27,7 @@ function mostrador_calculo(){
 	}
 	
 };
-
+export { mostrador_calculo };
 
 document.addEventListener("keypress", function (e) {
 	if (!dig_teclado(e)) {
@@ -346,3 +346,4 @@ function calculo() {
 		document.getElementById('resultados').value = "";
 	}
 };
+
