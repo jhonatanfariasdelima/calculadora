@@ -16,7 +16,7 @@ pipeline {
 
 		script {
                     // Inserir comandos para executar os testes unitários aqui
-                    def testResult = sh(returnStatus: true, script: 'node seu-arquivo-de-teste.js')
+                    def testResult = sh(returnStatus: true, script: 'node testes.js')
 
                     if (testResult == 0) {
                         currentBuild.result = 'SUCCESS'
